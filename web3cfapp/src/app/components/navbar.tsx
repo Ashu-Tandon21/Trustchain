@@ -2,8 +2,6 @@
 import { client } from "@/app/client";
 import Link from "next/link";
 import { ConnectButton, lightTheme, useActiveAccount } from "thirdweb/react";
-import Image from 'next/image';
-import thirdwebIcon from "@public/thirdweb.svg";
 
 const Navbar = () => {
     const account = useActiveAccount();
@@ -24,28 +22,14 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                    <div className="flex flex-shrink-0 items-center">
-                        <Image 
-                            src={thirdwebIcon} 
-                            alt="Your Company" 
-                            width={32} 
-                            height={32} 
-                            style={{
-                                filter: "drop-shadow(0px 0px 24px #a726a9a8)",
-                            }}
-                        />
-                    </div>
+                    {/* Logo removed */}
                     <div className="hidden sm:ml-6 sm:block">
                         <div className="flex space-x-4">
-                            <Link
-                                href={'/'}
-                            >
+                            <Link href={'/'}>
                                 <p className="rounded-md px-3 py-2 text-sm font-medium text-slate-700">Campaigns</p>
                             </Link>
                             {account && (
-                                <Link
-                                    href={`/dashboard/${account?.address}`}
-                                >
+                                <Link href={`/dashboard/${account?.address}`}>
                                     <p className="rounded-md px-3 py-2 text-sm font-medium text-slate-700">Dashboard</p>
                                 </Link>
                             )}

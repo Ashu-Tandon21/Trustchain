@@ -29,27 +29,29 @@ export default function DashboardPage() {
     return (
         <div className="mx-auto max-w-7xl px-4 mt-16 sm:px-6 lg:px-8">
             <div className="flex flex-row justify-between items-center mb-8">
-                <p className="text-4xl font-semibold">Dashboard</p>
+                <p className="text-4xl font-semibold text-black">Dashboard</p>
                 <button
                     className="px-4 py-2 bg-blue-500 text-white rounded-md"
                     onClick={() => setIsModalOpen(true)}
                 >Create Campaign</button>
             </div>
-            <p className="text-2xl font-semibold mb-4">My Campaigns:</p>
-            <div className="grid grid-cols-3 gap-4">
-                {!isLoadingMyCampaigns && (
-                    myCampaigns && myCampaigns.length > 0 ? (
-                        myCampaigns.map((campaign, index) => (
-                            <MyCampaignCard
-                                key={index}
-                                contractAddress={campaign.campaignAddress}
-                            />
-                        ))
-                    ) : (
-                        <p>No campaigns</p>
-                    )
-                )}
-            </div>
+            <p className="text-2xl font-semibold mb-4 text-white">My Campaigns:</p>
+<div className="grid grid-cols-3 gap-4">
+    {isLoadingMyCampaigns ? (
+        <p className="text-white">Loading...</p>
+    ) : myCampaigns && myCampaigns.length > 0 ? (
+        myCampaigns.map((campaign, index) => (
+            <MyCampaignCard
+                key={index}
+                contractAddress={campaign.campaignAddress}
+            />
+        ))
+    ) : (
+        <p className="text-white">No campaigns available</p>
+    )}
+</div>
+
+
             
             {isModalOpen && (
                 <CreateCampaignModal
@@ -76,35 +78,6 @@ const CreateCampaignModal = (
     const [campaignGoal, setCampaignGoal] = useState<number>(1);
     const [campaignDeadline, setCampaignDeadline] = useState<number>(1);
     
-    // Deploy contract from CrowdfundingFactory;
-    // const handleDeployContract = async () => {
-    //     setIsDeployingContract(true);
-    //     try {
-    //         console.log("Deploying contract...");
-    //         const contractAddress = await deployPublishedContract({
-    //             client: client,
-    //                 chain: sepolia,
-    //             account: account!,
-    //             contractId: "Crowdfunding",
-    //             contractParams: [
-    //                 campaignName,
-    //                 campaignDescription,
-    //                 campaignGoal,
-    //                 campaignDeadline
-    //             ],
-    //             publisher: "0xEe29620D0c544F00385032dfCd3Da3f99Affb8B2",
-    //             version: "1.0.6",
-    //         });
-    //         alert("Contract deployed successfully!");
-    //     } catch (error) {
-    //         console.error(error);
-    //     } finally {
-    //         setIsDeployingContract(false);
-    //         setIsModalOpen(false);
-    //         refetch
-    //     }
-    // };
-
     const handleDeployContract = async () => {
         setIsDeployingContract(true);
         try {
@@ -117,10 +90,10 @@ const CreateCampaignModal = (
                 contractParams: {
                     name: campaignName,
                     description: campaignDescription,
-                    goal: campaignGoal, // Pass as number
-                    deadline: campaignDeadline, // Pass as number
+                    goal: campaignGoal,
+                    deadline: campaignDeadline,
                 },
-                publisher: "0xEe29620D0c544F00385032dfCd3Da3f99Affb8B2",
+                publisher: "0xb47ca7f53a2F70F413F57b95B51124FE30F106A8",
                 version: "1.0.0",
             });
             alert("Contract deployed successfully!");
@@ -129,7 +102,7 @@ const CreateCampaignModal = (
         } finally {
             setIsDeployingContract(false);
             setIsModalOpen(false);
-            refetch(); // Call refetch to refresh the campaigns
+            refetch();
         }
     };
     
@@ -151,7 +124,7 @@ const CreateCampaignModal = (
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center backdrop-blur-md">
-            <div className="w-1/2 bg-slate-100 p-6 rounded-md">
+            <div className="w-1/2 bg-slate-100 p-6 rounded-md text-black">
                 <div className="flex justify-between items-center mb-4">
                     <p className="text-lg font-semibold">Create a Campaign</p>
                     <button
@@ -166,21 +139,21 @@ const CreateCampaignModal = (
                         value={campaignName}
                         onChange={(e) => setCampaignName(e.target.value)}
                         placeholder="Campaign Name"
-                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md"
+                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md text-black"
                     />
                     <label>Campaign Description:</label>
                     <textarea
                         value={campaignDescription}
                         onChange={(e) => setCampaignDescription(e.target.value)}
                         placeholder="Campaign Description"
-                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md"
+                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md text-black"
                     ></textarea>
                     <label>Campaign Goal:</label>
                     <input 
                         type="number"
                         value={campaignGoal}
                         onChange={(e) => handleCampaignGoal(parseInt(e.target.value))}
-                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md"
+                        className="mb-4 px-4 py-2 bg-slate-300 rounded-md text-black"
                     />
                     <label>{`Campaign Length (Days)`}</label>
                     <div className="flex space-x-4">
@@ -188,7 +161,7 @@ const CreateCampaignModal = (
                             type="number"
                             value={campaignDeadline}
                             onChange={(e) => handleCampaignLengthhange(parseInt(e.target.value))}
-                            className="mb-4 px-4 py-2 bg-slate-300 rounded-md"
+                            className="mb-4 px-4 py-2 bg-slate-300 rounded-md text-black"
                         />
                     </div>
 
